@@ -1,0 +1,2 @@
+Placeholder file for static files to be added later.
+
