@@ -8,7 +8,53 @@
 
   {% csrf_token %}
   {{ form.as_p }}
+
+
+
+  <button type="button" onclick="daily(true)">Daily</button>
+  <button type="button" onclick="weekdays()">Weekdays</button>
+  <button type="button" onclick="weekends()">Weekends</button>
+  <button type="button" onclick="daily(false)">Clear</button>
+
+  <br>
+
   <button name="submit">add program</button>
 </form>
+
+<script>
+function weekdays() {
+  var monFri = ["id_mon", "id_tue", "id_wed", "id_thu", "id_fri"];
+	var satSun = ["id_sat", "id_sun"];
+	// Check weekdays.
+	for(var i = 0; i < monFri.length; i++) {
+	    document.getElementById(monFri[i]).checked = true;
+	}
+	// Uncheck weekends.
+	for(var i = 0; i < satSun.length; i++) {
+	    document.getElementById(satSun[i]).checked = false;
+	}
+}
+
+function weekends() {
+  var monFri = ["id_mon", "id_tue", "id_wed", "id_thu", "id_fri"];
+	var satSun = ["id_sat", "id_sun"];
+	// Check weekends.
+	for(var i = 0; i < satSun.length; i++) {
+	    document.getElementById(satSun[i]).checked = true;
+	}
+  // Uncheck weekdays.
+	for(var i = 0; i < monFri.length; i++) {
+	    document.getElementById(monFri[i]).checked = false;
+	}
+}
+
+function daily(checkStatus) {
+    var wholeWeek = ["id_mon", "id_tue", "id_wed", "id_thu", "id_fri",
+                     "id_sat", "id_sun"];
+    for(var i = 0; i < wholeWeek.length; i++) {
+	    document.getElementById(wholeWeek[i]).checked = checkStatus;
+	}
+}
+</script>
 
 {% endblock content %}

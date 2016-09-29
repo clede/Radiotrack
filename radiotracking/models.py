@@ -14,6 +14,9 @@ class Program(models.Model):
     sat = models.BooleanField()
     sun = models.BooleanField()
 
+    # String representation of days
+    day_string = models.CharField(default='', max_length=30)
+
     # Time (PT).
     # No attempt to account for DST, or time zones.
     start_time = models.TimeField()
