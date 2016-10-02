@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 class Program(models.Model):
     """A radio program to be tracked."""
@@ -25,3 +27,27 @@ class Program(models.Model):
     def __str__(self):
         """Return a string representation of the model."""
         return self.title
+
+    def save(self, *args, **kwargs):
+        """Overriding the save method to automatically populate the day_string
+        field, based on the individual days checked/unchecked."""
+        weekdays = (self.mon, self.tue, self.wed, self.thu, self.fri)
+        weekends = (self.sat, self.sun)
+        days =     (self.mon, self.tue, self.wed, self.thu, self.fri,
+                    self.sat, self.sun)
+        day_names = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
+        if all(weekdays) and not any(weekends):
+            self.day_string = 'Mon-Fri'
+        elif all(weekends) and not any(weekdays):
+            self.day_string = 'Sat-Sun'
+        elif all(days):
+            self.day_string = 'Daily'
+        else:
+            # Build a string of the selected days, if they aren't one of the
+            # three common patterns above.
+            #
+            # TODO: update this to handle ranges (e.g. Mon-Wed)
+            day_names = zip(days, day_names)
+            day_list = [d[1] for d in day_names if d[0]]
+            self.day_string = ', '.join(day_list)
+        super(Program, self).save(*args, **kwargs)

@@ -23,9 +23,9 @@ def add_program(request):
         form = ProgramForm()
     else:
         # POST data submitted; process data.
-        form = ProgramForm(request.POST)
+        form = ProgramForm(request.POST) # A form bound to the POST data
         if form.is_valid():
-            form.save()
+            form.save() # This must be so simple due to our use of ModelForm?
             return HttpResponseRedirect(reverse('radiotracking:programs'))
 
     context = {'form': form}
