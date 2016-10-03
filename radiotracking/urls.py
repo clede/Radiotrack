@@ -14,4 +14,11 @@ urlpatterns = [
     # Page for adding a new program
     url(r'^add_program/$', views.add_program, name='add_program'),
 
+    # Detail page for a single program
+    url(r'^programs/(?P<program_id>\d+)/$', views.program, name='program'),
+
+    # Page for editing a program.
+    url(r'^edit_program/(?P<program_id>\d+)/$', views.edit_program,
+    name='edit_program'),
+
 ]

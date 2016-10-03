@@ -1,0 +1,16 @@
+{% extends 'radiotracking/base.html' %}
+
+{% block content %}
+
+<p>Title: {{ program }}</p>
+
+<p>Day(s): {{ program.day_string }}</p>
+
+<p>Start time: {{ program.start_time }}</p>
+<p>End time: {{ program.end_time }}</p>
+
+<p>Radio station: {{ program.channel }}</p>
+
+<p><a href="{% url 'radiotracking:edit_program' program.id %}">edit</a></p>
+
+{% endblock content %}

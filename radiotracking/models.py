@@ -16,7 +16,7 @@ class Program(models.Model):
     sat = models.BooleanField()
     sun = models.BooleanField()
 
-    # String representation of days
+    # String representation of days of the week.
     day_string = models.CharField(default='', max_length=30)
 
     # Time (PT).
@@ -36,12 +36,13 @@ class Program(models.Model):
         days =     (self.mon, self.tue, self.wed, self.thu, self.fri,
                     self.sat, self.sun)
         day_names = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
-        if all(weekdays) and not any(weekends):
+
+        if all(days):
+            self.day_string = 'Daily'
+        elif all(weekdays) and not any(weekends):
             self.day_string = 'Mon-Fri'
         elif all(weekends) and not any(weekdays):
             self.day_string = 'Sat-Sun'
-        elif all(days):
-            self.day_string = 'Daily'
         else:
             # Build a string of the selected days, if they aren't one of the
             # three common patterns above.

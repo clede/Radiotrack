@@ -30,3 +30,28 @@ def add_program(request):
 
     context = {'form': form}
     return render(request, 'radiotracking/add_program.html', context)
+
+def program(request, program_id):
+    """Show a single program and all the info about it."""
+    program = Program.objects.get(id=program_id)
+    context = {'program': program, }
+    return render(request, 'radiotracking/program.html', context)
+
+def edit_program(request, program_id):
+    """Edit an existing program."""
+    program = Program.objects.get(id=program_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current program.
+        form = ProgramForm(instance=program)
+    else:
+        # POST data submitted; process data.
+        form = ProgramForm(instance=program, data=request.POST)
+        if form.is_valid():
+            form.save()
+
+            # Not completely sure if this next bit should be programs or program
+            return HttpResponseRedirect(reverse('radiotracking:program',
+            args=[program.id]))
+    context = {'program': program, 'form': form}
+    return render(request, 'radiotracking/edit_program.html', context)

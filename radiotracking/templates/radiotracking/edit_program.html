@@ -1,0 +1,16 @@
+{% extends "radiotracking/base.html" %}
+
+{% block content %}
+
+<p><a href="{% url 'radiotracking:program' program.id %}">{{ program }}</a>
+</p>
+
+<p>Edit entry:</p>
+
+<form action="{% url 'radiotracking:edit_program' program.id %}" method='post'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button name="submit">save changes</button>
+</form>
+
+{% endblock content %}
