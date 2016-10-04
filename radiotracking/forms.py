@@ -4,7 +4,7 @@ from .models import Program
 class ProgramForm(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ['title', 'channel', 'start_time', 'end_time',
+        fields = ['title', 'station', 'start_time', 'end_time',
                   'mon',
                   'tue',
                   'wed',

@@ -2,10 +2,19 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
+class Station(models.Model):
+    """A radio station."""
+    # Still working on clarifying what fields need to be here.
+    # - Terrestrial Band: AM or FM
+    # - Terrestrial frequency
+    # - URL
+    # - Name 
+
+
 class Program(models.Model):
     """A radio program to be tracked."""
     title = models.CharField(max_length=200)
-    channel = models.CharField(max_length=40, blank=True)
+    station = models.CharField(max_length=40, blank=True)
 
     # Days of the week.
     mon = models.BooleanField()
@@ -46,8 +55,6 @@ class Program(models.Model):
         else:
             # Build a string of the selected days, if they aren't one of the
             # three common patterns above.
-            #
-            # TODO: update this to handle ranges (e.g. Mon-Wed)
             day_names = zip(days, day_names)
             day_list = [d[1] for d in day_names if d[0]]
             self.day_string = ', '.join(day_list)
