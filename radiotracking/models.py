@@ -5,15 +5,24 @@ from django.dispatch import receiver
 class Station(models.Model):
     """A radio station."""
     # Still working on clarifying what fields need to be here.
-    # - Terrestrial Band: AM or FM
-    # - Terrestrial frequency
-    # - URL
-    # - Name 
-
+    BAND_CHOICES = ( ('AM', 'AM'),
+                     ('FM', 'FM'),
+                     ('NA', 'None') )
+    
+    name = models.CharField(max_length=40)
+    url = models.URLField(max_length=300)
+    band = models.CharField(max_length=2, choices=BAND_CHOICES, default='NA')
+    # Storing frequency as a string right now, as it is only used for displaying to the user.
+    # Consider changing it to a number later.
+    freq = models.CharField(max_length=5, blank=True, null=True)
+    
 
 class Program(models.Model):
     """A radio program to be tracked."""
     title = models.CharField(max_length=200)
+    
+    # Station is currently a string, but eventually we need to change it to  
+    # an actual station entry in the database.
     station = models.CharField(max_length=40, blank=True)
 
     # Days of the week.
