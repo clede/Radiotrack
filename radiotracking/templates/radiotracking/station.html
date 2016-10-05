@@ -1,0 +1,14 @@
+{% extends 'radiotracking/base.html' %}
+
+{% block content %}
+
+<p>Name: {{ station }}</p>
+
+<p>URL: {{ station.url }}</p>
+
+<p>Band: {{ station.band }}</p>
+<p>Frequency: {{ station.freq }}</p>
+
+<p><a href="{% url 'radiotracking:edit_station' station.id %}">edit</a></p>
+
+{% endblock content %}
