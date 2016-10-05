@@ -5,10 +5,10 @@ from django.dispatch import receiver
 class Station(models.Model):
     """A radio station."""
     # Still working on clarifying what fields need to be here.
+    # - Name
+    # - URL
     # - Terrestrial Band: AM or FM
     # - Terrestrial frequency
-    # - URL
-    # - Name 
 
 
 class Program(models.Model):
