@@ -67,4 +67,4 @@ class Program(models.Model):
             day_names = zip(days, day_names)
             day_list = [d[1] for d in day_names if d[0]]
             self.day_string = ', '.join(day_list)
-super(Program, self).save(*args, **kwargs)
+        super(Program, self).save(*args, **kwargs)
