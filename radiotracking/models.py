@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
@@ -10,9 +11,11 @@ class Station(models.Model):
                      ('NA', 'None') )
 
     name = models.CharField(max_length=40)
-    url = models.URLField(max_length=300)
+    website = models.URLField(max_length=300)
+    stream_url = models.URLField(max_length=400, blank=True, null=True)
     band = models.CharField(max_length=2, choices=BAND_CHOICES, default='NA')
-    # Storing frequency as a string right now, as it is only used for displaying to the user.
+    # Storing frequency as a string right now, as it is only used for
+    # displaying to the user.
     # Consider changing it to a number later.
     freq = models.CharField(max_length=5, blank=True, null=True)
 
@@ -41,6 +44,8 @@ class Program(models.Model):
     # No attempt to account for DST, or time zones.
     start_time = models.TimeField()
     end_time = models.TimeField(blank=True, null=True)
+
+    owner = models.ForeignKey(User)
 
     def __str__(self):
         """Return a string representation of the model."""

@@ -8,7 +8,15 @@
 
 <p>
   <a href="{% url 'radiotracking:index' %}">RadioTrack</a> -
-  <a href="{% url 'radiotracking:programs' %}">Programs</a>
+  <a href="{% url 'radiotracking:programs' %}">Programs</a> -
+  <a href="{% url 'radiotracking:stations' %}">Stations</a> -
+  {% if user.is_authenticated %}
+    Hello, {{ user.username }}.
+    <a href="{% url 'users:logout' %}">log out</a>
+  {% else %}
+    <a href="{% url 'users:register' %}">register</a> -
+    <a href="{% url 'users:login' %}">log in</a>
+  {% endif %}
 </p>
 
 {% block content %} {% endblock content %}

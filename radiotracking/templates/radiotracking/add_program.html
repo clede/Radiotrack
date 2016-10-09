@@ -22,6 +22,8 @@
 </form>
 
 <script>
+
+/** Automatically check the weekday checkboxes, and uncheck weekends. */
 function weekdays() {
   var monFri = ["id_mon", "id_tue", "id_wed", "id_thu", "id_fri"];
 	var satSun = ["id_sat", "id_sun"];
@@ -35,6 +37,7 @@ function weekdays() {
 	}
 }
 
+/** Automatically check weekend checkboxes, and uncheck weekdays. */
 function weekends() {
   var monFri = ["id_mon", "id_tue", "id_wed", "id_thu", "id_fri"];
 	var satSun = ["id_sat", "id_sun"];
@@ -48,6 +51,7 @@ function weekends() {
 	}
 }
 
+/** Automatically check both weekday and weekend checkboxes. */
 function daily(checkStatus) {
     var wholeWeek = ["id_mon", "id_tue", "id_wed", "id_thu", "id_fri",
                      "id_sat", "id_sun"];

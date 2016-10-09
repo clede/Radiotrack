@@ -21,4 +21,18 @@ urlpatterns = [
     url(r'^edit_program/(?P<program_id>\d+)/$', views.edit_program,
     name='edit_program'),
 
+    # Show all stations
+    url(r'^stations/$', views.stations, name='stations'),
+
+    # Page for adding a new station
+    url(r'^add_station/$', views.add_station, name='add_station'),
+
+    # Detail page for a single station
+    url(r'^stations/(?P<station_id>\d+)/$', views.station, name='station'),
+
+    # Page for editing a program.
+    url(r'^edit_station/(?P<station_id>\d+)/$', views.edit_station,
+    name='edit_station'),
+
+
 ]

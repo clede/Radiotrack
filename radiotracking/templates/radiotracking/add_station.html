@@ -1,0 +1,17 @@
+{% extends "radiotracking/base.html" %}
+
+{% block content %}
+
+<p>Add a new radio station:</p>
+
+<form action="{% url 'radiotracking:add_station' %}" method='post'>
+
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <br>
+
+  <button name="submit">add station</button>
+</form>
+
+{% endblock content %}
