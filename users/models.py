@@ -7,6 +7,8 @@ TZ_CHOICES = [(tz, tz.replace('_', ' ')) for tz in pytz.all_timezones]
 
 # Create your models here.
 class UserProfile(models.Model):
+    """A profile associated with a specific user. Additional user-specific records, 
+    such as time zone will be here."""
     user = models.OneToOneField(User)
     tz = models.CharField(max_length=32,
         choices=TZ_CHOICES,
