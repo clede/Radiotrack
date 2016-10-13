@@ -18,6 +18,7 @@ class Station(models.Model):
     # displaying to the user.
     # Consider changing it to a number later.
     freq = models.CharField(max_length=5, blank=True, null=True)
+    location = models.CharField(max_length=200)
 
 
 class Program(models.Model):
