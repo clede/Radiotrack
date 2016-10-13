@@ -2,10 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import UserProfile, TZ_CHOICES
+from .models import UserProfile
 
 class UserCreationFormTZ(UserCreationForm):
-    tz = forms.ChoiceField(choices=TZ_CHOICES,
+    tz = forms.ChoiceField(choices=UserProfile.TZ_CHOICES,
         initial='America/Los_Angeles',
         # Time zone label DOES work here.
         label='Time zone')

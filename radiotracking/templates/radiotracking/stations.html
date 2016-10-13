@@ -10,6 +10,7 @@
     <th>Name</th>
     <th>Stream</th>
     <th>RF Frequency</th>
+    <th>Location</th>
   </tr>
 
   {% for station in stations %}
@@ -19,10 +20,12 @@
       <td><a href="{{station.website}}">{{ station.name }}</a></td>
       <td><a href="{{station.stream_url}}">stream</a></td>
       <td>{{ station.band }} {{ station.freq }}</td>
+      <td>{{ station.location }}</td>
     </tr>
   {% empty %}
     <tr>
       <td>No stations added yet.</td>
+      <td> </td>
       <td> </td>
       <td> </td>
     </tr>
