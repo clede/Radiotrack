@@ -49,6 +49,10 @@ class Station(models.Model):
         # default to the current user's time zone.
         default='America/Los_Angeles')
 
+    def __str__(self):
+        """Return a string representation of the radio station."""
+        return self.name
+
 class Program(models.Model):
     """A radio program to be tracked."""
     TZ_CHOICES = [(tz, tz.replace('_', ' ')) for tz in pytz.all_timezones]
@@ -56,7 +60,7 @@ class Program(models.Model):
 
     # Station is currently a string, but eventually we need to change it to
     # an actual station entry in the database.
-    station = models.CharField(max_length=40, blank=True)
+    station = models.ForeignKey(Station)
     tz = models.CharField(max_length=32,
         choices=TZ_CHOICES,
         # Currently defaults to America/Los_Angeles, but ultimately should

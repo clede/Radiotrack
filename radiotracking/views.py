@@ -11,8 +11,8 @@ def index(request):
     """The home page for the 'radiotracking' app."""
     return render(request, 'radiotracking/index.html')
 
-def check_program_owner(program):
-    if program.owner != request.user:
+def check_program_owner(program, user):
+    if program.owner != user:
         raise Http404
 
 @login_required
@@ -45,7 +45,7 @@ def add_program(request):
 def program(request, program_id):
     """Show a single program and all the info about it."""
     program = Program.objects.get(id=program_id)
-    check_program_owner(program)
+    check_program_owner(program, request.user)
     context = {'program': program, }
     return render(request, 'radiotracking/program.html', context)
 
@@ -53,7 +53,7 @@ def program(request, program_id):
 def edit_program(request, program_id):
     """Edit an existing program."""
     program = Program.objects.get(id=program_id)
-    check_program_owner(program)
+    check_program_owner(program, request.user)
     if request.method != 'POST':
         # Initial request; pre-fill form with the current program.
         form = ProgramForm(instance=program)

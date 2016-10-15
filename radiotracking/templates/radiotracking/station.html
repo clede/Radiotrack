@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<p>Name: {{ station }}</p>
+<p>{{ station }}</p>
 
-<p>Website: {{ station.website }}</p>
-<p>Stream: {{ station.stream_url }}</p>
+<p>Website: <a href="{{ station.website }}">{{ station.website }}</a></p>
+<p>Stream:  <a href="{{ station.stream_url }}">{{ station.stream_url }}</a></p>
 
 <p>Band: {{ station.band }}</p>
 <p>Frequency: {{ station.freq }}</p>

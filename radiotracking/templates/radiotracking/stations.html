@@ -7,7 +7,8 @@
 <table border="1">
 
   <tr>
-    <th>Name</th>
+    <th>Station</th>
+    <th>Website</th>
     <th>Stream</th>
     <th>RF Frequency</th>
     <th>Location</th>
@@ -17,8 +18,11 @@
     <tr>
       <!-- This doesn't currently link to the station page. Consider adding two
       links: 1. To the station itself, 2. To the station page in this webapp.-->
-      <td><a href="{{station.website}}">{{ station.name }}</a></td>
-      <td><a href="{{station.stream_url}}">stream</a></td>
+      <td><a href="{% url 'radiotracking:station' station.id %}">
+        {{ station.name }}</a>
+      </td>
+      <td><a href="{{station.website}}">{{ station.name }} website</a></td>
+      <td><a href="{{station.stream_url}}">{{ station.name }} stream</a></td>
       <td>{{ station.band }} {{ station.freq }}</td>
       <td>{{ station.location }}</td>
     </tr>
