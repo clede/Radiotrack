@@ -12,7 +12,7 @@ class ProgramForm(forms.ModelForm):
                   'fri',
                   'sat',
                   'sun' ]
-        labels = { }
+        labels = {'tz': 'Time Zone'}
 
 class StationForm(forms.ModelForm):
     class Meta:

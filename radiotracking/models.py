@@ -4,6 +4,29 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 import pytz
 
+# Helper functions
+def get_streaks(iter):
+    """Given an iterable, detect any consecutive True values. Returns a zip
+    object of the start and end indices of each streak."""
+    # There's gotta be a better way to do this...
+    in_streak = False
+    starts = []
+    ends = []
+    for i, val in enumerate(iter):
+        # Starting point of a streak
+        if val and not in_streak:
+            starts.append(i)
+            in_streak = True
+        # Ending point of a streak
+        elif in_streak and not val:
+            ends.append(i-1)
+            in_streak = False
+    # If in streak at the end, the last index is an ending point.
+    if in_streak:
+        ends.append(len(iter) - 1)
+    return zip(starts, ends)
+
+
 class Station(models.Model):
     """A radio station."""
     TZ_CHOICES = [(tz, tz.replace('_', ' ')) for tz in pytz.all_timezones]
@@ -63,25 +86,28 @@ class Program(models.Model):
         """Return a string representation of the model."""
         return self.title
 
+    def set_day_string(self):
+        """Generates and stores a proper string representing the days of the
+        week this program occurs."""
+        days = (self.mon, self.tue, self.wed, self.thu, self.fri, self.sat,
+            self.sun)
+        day_names = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
+        if all(days):
+            self.day_string = 'Daily'
+        else:
+            streaks = get_streaks(days)
+            result_text = []
+
+            for start, end in streaks:
+                if start == end:
+                    # A single-day "streak"
+                    result_text.append(day_names[start])
+                else:
+                    result_text.append(day_names[start] + '-' + day_names[end])
+            self.day_string = ', '.join(result_text)
+
     def save(self, *args, **kwargs):
         """Overriding the save method to automatically populate the day_string
         field, based on the individual days checked/unchecked."""
-        weekdays = (self.mon, self.tue, self.wed, self.thu, self.fri)
-        weekends = (self.sat, self.sun)
-        days =     (self.mon, self.tue, self.wed, self.thu, self.fri,
-                    self.sat, self.sun)
-        day_names = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
-
-        if all(days):
-            self.day_string = 'Daily'
-        elif all(weekdays) and not any(weekends):
-            self.day_string = 'Mon-Fri'
-        elif all(weekends) and not any(weekdays):
-            self.day_string = 'Sat-Sun'
-        else:
-            # Build a string of the selected days, if they aren't one of the
-            # three common patterns above.
-            day_names = zip(days, day_names)
-            day_list = [d[1] for d in day_names if d[0]]
-            self.day_string = ', '.join(day_list)
+        self.set_day_string()
         super(Program, self).save(*args, **kwargs)
