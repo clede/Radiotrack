@@ -59,6 +59,10 @@ def edit_program(request, program_id):
         form = ProgramForm(instance=program)
     else:
         # POST data submitted; process data.
+        if request.POST.get('delete'):
+            # Delete the current program
+            program.delete()
+            return  HttpResponseRedirect(reverse('radiotracking:programs'))
         form = ProgramForm(instance=program, data=request.POST)
         if form.is_valid():
             form.save()

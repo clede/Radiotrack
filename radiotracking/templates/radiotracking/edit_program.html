@@ -10,7 +10,8 @@
 <form action="{% url 'radiotracking:edit_program' program.id %}" method='post'>
   {% csrf_token %}
   {{ form.as_p }}
-  <button name="submit">save changes</button>
+  <button name="submit" value="submit">save changes</button>
+  <button name="delete" value="delete">delete this
 </form>
 
 {% endblock content %}

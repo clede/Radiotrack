@@ -7,8 +7,7 @@
 <p>Website: <a href="{{ station.website }}">{{ station.website }}</a></p>
 <p>Stream:  <a href="{{ station.stream_url }}">{{ station.stream_url }}</a></p>
 
-<p>Band: {{ station.band }}</p>
-<p>Frequency: {{ station.freq }}</p>
+<p>Frequency: {{ station.band }} {{ station.freq }}</p>
 <p>Location: {{ station.location }}</p>
 
 <p><a href="{% url 'radiotracking:edit_station' station.id %}">edit</a></p>
