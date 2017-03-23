@@ -21,9 +21,25 @@
       <td><a href="{% url 'radiotracking:station' station.id %}">
         {{ station.name }}</a>
       </td>
-      <td><a href="{{station.website}}">{{ station.name }} website</a></td>
-      <td><a href="{{station.stream_url}}">{{ station.name }} stream</a></td>
-      <td>{{ station.band }} {{ station.freq }}</td>
+      
+      <td>
+	{% if station.website %}
+	<a href="{{station.website}}">{{ station.name }} website</a>
+	{% endif %}
+      </td>
+      
+      <td>
+	{% if station.stream_url %}
+	<a href="{{station.stream_url}}">{{ station.name }} stream</a>
+        {% endif %}
+      </td>
+      
+      <td>
+	{% if station.band != 'NA' %}      
+	{{ station.band }} {{ station.freq }}
+        {% endif %}
+      </td>
+      
       <td>{{ station.location }}</td>
     </tr>
   {% empty %}
